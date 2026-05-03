@@ -1,259 +1,153 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: 'sans-serif',
+      ),
+      home: const SettingsScreen(),
     );
   }
 }
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
 
-class LoginPage extends StatefulWidget {
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
-
-class _LoginPageState extends State<LoginPage> {
-  bool isChecked = false;
-  bool isPasswordHidden = true;
-
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool isNotifOn = true;
+  bool isSoundOn = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: const Icon(Icons.arrow_back_ios_new,
+            color: Colors.black,
+            size: 20),
+        title: const Text(
+          'Settings',
+          style: TextStyle(color: Colors.black,
+              fontWeight: FontWeight.w900,
+              fontSize: 22),
+        ),
+        centerTitle: true,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: Icon(Icons.dark_mode_outlined, color: Colors.black),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+          child: Column(
+            children: [
+              _buildHeader("My Account", const Color(0xFFFCC2D7)),
+              const SizedBox(height: 10),
+              _buildSimpleTile("Edit Profile",
+                  const Color(0xFFFF4D8D)),
+              _buildSimpleTile("Change Password", const Color(0xFFFF4D8D)),
+              _buildSimpleTile("Re-take Quiz", const Color(0xFFFF4D8D)),
+              const SizedBox(height: 35),
+              _buildHeader("Notifications", const Color(0xFFCDB4DB), icon: Icons.notifications_none_rounded),
+              const SizedBox(height: 10),
+              _buildSwitchTile("Notifications", isNotifOn, const Color(0xFFB185DB), (val) {
+                setState(() => isNotifOn = val);
+              }),
+              _buildSwitchTile("Notifications sound", isSoundOn, Colors.grey.shade400, (val) {
+                setState(() => isSoundOn = val);
+              }),
+              const SizedBox(height: 35),
+              _buildHeader("More", const Color(0xFFBDE0FE), icon: Icons.more_horiz_rounded),
+              const SizedBox(height: 10),
+              _buildIconTile("Language", Icons.language_rounded, const Color(0xFF4CC9F0)),
+              _buildIconTile("Logout", Icons.logout_rounded, const Color(0xFF4CC9F0)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  Widget _buildHeader(String title, Color bgColor, {IconData? icon}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
         children: [
-          ClipPath(
-            clipper: TopCurveClipper(),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.45,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xffd4fcf9),
-                    Color(0xfff6d6ff),
-                    Color(0xffffd6c9),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-            ),
+          if (icon != null) ...[
+            Icon(icon, size: 24, color: Colors.black),
+            const SizedBox(width: 12),
+          ],
+          Text(
+            title,
+            style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w900, color: Colors.black),
           ),
-
-          Positioned(
-            top: 40,
-            left: 20,
-            child: Row(
-              children: [
-                Icon(Icons.arrow_back),
-                SizedBox(width: 5),
-                Text("Back"),
-              ],
-            ),
-          ),
-
-
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Transform.translate(
-              offset: Offset(0,-40),
-              child: Container(
-                padding: EdgeInsets.all(20),
-                height: MediaQuery.of(context).size.height * 0.65,
-                decoration: BoxDecoration(
-                  color: Color(0xfff8f8f8),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(45),
-                    topRight: Radius.circular(45),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 20,
-                      offset: Offset(0, -5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Welcome Back",
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "Ready to continue your skin journey?Your path is right here",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    SizedBox(height: 25),
-                    TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: "Enter email",
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 15),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      obscureText: isPasswordHidden,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: "Password",
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 15),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            isPasswordHidden
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isPasswordHidden = !isPasswordHidden;
-                            });
-                          },
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Checkbox(
-                              value: isChecked,
-                              onChanged: (val) {
-                                setState(() {
-                                  isChecked = val!;
-                                });
-                              },
-                            ),
-                            Text("Remember me"),
-                          ],
-                        ),
-                        Text(
-                          "Forgot password?",
-                          style: TextStyle(color: Colors.purple),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xfffbc2eb),
-                            Color(0xffa6c1ee),
-                          ],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                            Color(0xfffbc2eb).withOpacity(0.5),
-                            blurRadius: 15,
-                            offset: Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-
-                    Text("Log in with"),
-                    SizedBox(height: 15),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.facebook,
-                            color: Colors.blue, size: 30),
-                        SizedBox(width: 20),
-                        Icon(Icons.g_mobiledata,
-                            color: Colors.red, size: 35),
-                      ],
-                    ),
-
-                    Spacer(),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Don't have an account? "),
-                        Text(
-                          "Sign up",
-                          style: TextStyle(color: Colors.purple),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+        ],
+      ),
+    );
+  }
+  Widget _buildSimpleTile(String title, Color arrowColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
+          Icon(Icons.arrow_forward_ios_rounded, color: arrowColor, size: 18),
+        ],
+      ),
+    );
+  }
+  Widget _buildSwitchTile(String title, bool value, Color activeColor, ValueChanged<bool> onChanged) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
+          Transform.scale(
+            scale: 0.9,
+            child: Switch(
+              value: value,
+              onChanged: onChanged,
+              activeTrackColor: activeColor,
+              activeColor: Colors.white,
+              inactiveTrackColor: Colors.grey.shade300,
+              trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
             ),
           ),
         ],
       ),
     );
   }
-}
-
-class TopCurveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-
-    path.lineTo(0, size.height - 70);
-
-    path.cubicTo(
-      size.width * 0.25,
-      size.height + 40,
-      size.width * 0.75,
-      size.height - 120,
-      size.width,
-      size.height - 70,
+  Widget _buildIconTile(String title, IconData icon, Color iconColor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
+          Icon(icon, color: iconColor, size: 26),
+        ],
+      ),
     );
-
-    path.lineTo(size.width, 0);
-    path.close();
-
-    return path;
   }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
