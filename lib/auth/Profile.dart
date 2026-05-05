@@ -1,11 +1,6 @@
+import 'package:dramaskin/Provider/userdata.dart';
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: ProfilePage(),
-  ));
-}
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -39,10 +34,22 @@ class ProfilePage extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Icon(Icons.arrow_back_ios, size: 22),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
+                              ),
+                              child: IconButton(
+                                icon: Icon(Icons.arrow_back_ios_new, color: Color(0xFFFF74A4), size: 18),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
                           ),
                           Text(
-                            'salma tamer',
+                            '${Provider.of<UserData>(context).name}',
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -92,7 +99,7 @@ class ProfilePage extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration.underline,
                                       fontSize: 16)),
-                              Text('@salmatamer2009',
+                              Text('${Provider.of<UserData>(context).name}',
                                   style: TextStyle(color: Colors.grey, fontSize: 14)),
                             ],
                           ),
@@ -116,7 +123,7 @@ class ProfilePage extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration.underline,
                                       fontSize: 16)),
-                              Text('salmatamer20009@gmail.com',
+                              Text('${Provider.of<UserData>(context).email}',
                                   style: TextStyle(color: Colors.grey, fontSize: 14)),
                             ],
                           ),
@@ -143,9 +150,9 @@ class ProfilePage extends StatelessWidget {
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             SizedBox(height: 12),
-                            Text("Combination skin",
+                            Text('${Provider.of<UserData>(context).skinType}',
                                 style: TextStyle(fontSize: 15)),
-                            Text("dark spots - dryness",
+                            Text('${Provider.of<UserData>(context).skinConcerns}',
                                 style: TextStyle(fontSize: 15)),
                             SizedBox(height: 50),
                             Image.asset(

@@ -34,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
 
-          /// الكارد
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -101,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return "Enter valid email";
                         }
 
-                        return null;
+
                       },
                     ),
 
