@@ -1,68 +1,12 @@
-import 'package:dramaskin/Questions/Gender.dart';
+import 'package:dramaskin/Provider/userdata.dart';
+import 'package:dramaskin/Questions/skin_concerns.dart';
 import 'package:dramaskin/shared/appColors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Questions.dart';
+import 'SkinRes.dart';
 
-/// ─────────────────────────────
-/// DATA MODEL
-/// ─────────────────────────────
-class QuizQuestion {
-  final String question;
-  final List<String> options;
 
-  const QuizQuestion({required this.question, required this.options});
-}
-
-const List<QuizQuestion> questions = [
-  QuizQuestion(
-    question: 'How does your skin feel after washing?\n(without products)',
-    options: [
-      'Very tight and dry',
-      'Shiny and oily',
-      'Oily in T-zone only',
-      'Comfortable and balanced',
-    ],
-  ),
-  QuizQuestion(
-    question: 'How often does your face get shiny during the day?',
-    options: [
-      'Never',
-      'Very often (whole face)',
-      'Only forehead, nose, chin',
-      'Rarely',
-    ],
-  ),
-  QuizQuestion(
-    question: 'How visible are your pores?',
-    options: [
-      'Very small',
-      'Large everywhere',
-      'Large in T-zone only',
-      'Small to medium',
-    ],
-  ),
-  QuizQuestion(
-    question: 'How often do you get breakouts?',
-    options: [
-      'Rarely, but skin flakes',
-      'Frequently everywhere',
-      'Mostly in T-zone',
-      'Very rarely',
-    ],
-  ),
-  QuizQuestion(
-    question: 'How does moisturizer usually feel?',
-    options: [
-      'Absorbs immediately',
-      'Feels greasy',
-      'Good on cheeks, heavy on T-zone',
-      'Feels normal',
-    ],
-  ),
-];
-
-/// ─────────────────────────────
-/// SCREEN
-/// ─────────────────────────────
 class QuestionnaireScreen extends StatefulWidget {
   const QuestionnaireScreen({super.key});
 
@@ -87,14 +31,24 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
   void _onNext() {
     if (_selectedOption == null) return;
 
+    SkinScore.addAnswer(_currentQuestion, _selectedOption!);
+
     if (_currentQuestion < questions.length - 1) {
       setState(() {
         _currentQuestion++;
         _selectedOption = null;
       });
     } else {
-      print("Finished 🔥");
-    Navigator.push(context, MaterialPageRoute(builder: (context) => GenderScreen()));
+      SkinType result = SkinScore.getResult();
+      Provider.of<UserData>(context,listen: false).setSkinType(result);
+      SkinScore.reset(); // مهم عشان لو المستخدم بدأ تاني
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SkinConcernsScreen(),
+        ),
+      );
     }
   }
 
@@ -172,7 +126,6 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
             ),
           ),
 
-          /// 🔥 OPTIONS
           Positioned(
             top: 400,
             left: 20,
@@ -198,7 +151,7 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
             ),
           ),
 
-          /// 🔥 BUTTONS
+
           Positioned(
             bottom: 40,
             left: 20,

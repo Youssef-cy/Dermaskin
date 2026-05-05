@@ -1,4 +1,5 @@
 import 'package:dramaskin/Provider/userdata.dart';
+import 'package:dramaskin/Questions/ThankYouView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,10 +11,12 @@ class GenderScreen extends StatefulWidget {
 }
 
 class _GenderScreenState extends State<GenderScreen> {
-  int? selected;
+  String? selected;
 
   @override
   Widget build(BuildContext context) {
+    final userData = context.watch<UserData>();
+
     return Scaffold(
       backgroundColor: const Color(0xfff5d9de),
       body: Stack(
@@ -39,13 +42,16 @@ class _GenderScreenState extends State<GenderScreen> {
             left: 0,
             right: 0,
             child: Column(
-              children:  [
+              children: [
                 Text(
-                  "Hi, ${Provider.of<Userdata>(context).Username}",
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  "Hi, ${userData.name}",
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   "Please select your gender",
                   style: TextStyle(color: Colors.black54, fontSize: 20),
                 ),
@@ -59,17 +65,19 @@ class _GenderScreenState extends State<GenderScreen> {
             right: 0,
             child: Column(
               children: [
-                SizedBox(height: 100),
+                const SizedBox(height: 100),
 
                 genderItem(
                   image: "assets/female.jpg",
                   text: "Female",
-                  index: 0,
                 ),
 
                 const SizedBox(height: 30),
 
-                genderItem(image: "assets/male.jpg", text: "Male", index: 1),
+                genderItem(
+                  image: "assets/male.jpg",
+                  text: "Male",
+                ),
               ],
             ),
           ),
@@ -78,38 +86,30 @@ class _GenderScreenState extends State<GenderScreen> {
             bottom: 30,
             left: 30,
             right: 30,
-            child: Row(
-              children: [
-                const SizedBox(width: 15),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      if (selected == null) {
-                        return ;
-                      }
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Sign Up successful ")),
-                      );
-                    },
-                    child: Container(
-                      height: 65,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffe45c8c),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "finish Sign up",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
+            child: GestureDetector(
+              onTap: () {
+                if (selected == null) return;
+
+                context.read<UserData>().setGender(selected!);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Sign Up successful")),
+                );
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>ThankYouView()));
+              },
+              child: Container(
+                height: 65,
+                decoration: BoxDecoration(
+                  color: const Color(0xffe45c8c),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Finish Sign up",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -120,14 +120,13 @@ class _GenderScreenState extends State<GenderScreen> {
   Widget genderItem({
     required String image,
     required String text,
-    required int index,
   }) {
-    bool isSelected = selected == index;
+    bool isSelected = selected == text;
 
     return GestureDetector(
       onTap: () {
         setState(() {
-          selected = index;
+          selected = text;
         });
       },
       child: Column(
@@ -144,7 +143,7 @@ class _GenderScreenState extends State<GenderScreen> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Image.asset(image, fit: BoxFit.contain),
+              child: Image.asset(image),
             ),
           ),
           const SizedBox(height: 10),

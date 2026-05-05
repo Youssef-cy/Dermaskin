@@ -214,7 +214,7 @@ class _SignupState extends State<Signup> {
                           print("Email: ${emailController.text}");
                           print("Password: ${passwordController.text}");
 
-                          Provider.of<Userdata>(context,listen: false).Setname(UsernameController.text);
+                          Provider.of<UserData>(context,listen: false).setPersonalInfo(UsernameController.text,emailController.text,passwordController.text);
 
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>QuestionnaireScreen()));
 

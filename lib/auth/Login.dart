@@ -1,3 +1,4 @@
+import 'package:dramaskin/Home/Home.dart';
 import 'package:dramaskin/Provider/userdata.dart';
 import 'package:dramaskin/auth/Signup.dart';
 import 'package:flutter/material.dart';
@@ -179,12 +180,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
 
                           print("Email: ${emailController.text}");
+
                           print("Password: ${passwordController.text}");
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Login Successful"),
                             ),
                           );
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
                         }
                       },
                       child: Container(
