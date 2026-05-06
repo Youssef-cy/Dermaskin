@@ -10,65 +10,65 @@ class SkinSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.pink.withOpacity(0.07),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
+
       ),
+
       child:
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Stack(
             children: [
-              const Center(
-                child: Text(
-                  'Skin Summary',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF555555),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              _row('Skin Type :', '${Provider.of<UserData>(context).skinType}'),
-              const SizedBox(height: 6),
-              _row('Concerns :', '${Provider.of<UserData>(context).skinConcerns}'),
-              const SizedBox(height: 6),
-              _row('Gender :', '${Provider.of<UserData>(context).gender}'),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE05580),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionnaireScreen()));
-                    },
-                    child: const Text(
-                      'Edit',
+
+              Image.asset("assets/ContainerBg.jpeg"),
+
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Text(
+                      'Skin Summary',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+                        fontSize: 13,
                         fontWeight: FontWeight.w600,
+                        color: Color(0xFF555555),
                       ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  _row('Skin Type :', '${Provider.of<UserData>(context).skinType}'),
+                  _row('Concerns :', '${Provider.of<UserData>(context).skinConcerns}'),
+                  _row('Gender :', '${Provider.of<UserData>(context).gender}'),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE05580),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionnaireScreen()));
+                        },
+                        child: const Text(
+                          'Edit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+                            ),
               ),
-            ],
-          ),
+          ]),
 
     );
   }
@@ -77,7 +77,7 @@ class SkinSummaryCard extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 95,
+          width: 85,
           child: Text(
             label,
             style: const TextStyle(

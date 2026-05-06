@@ -21,13 +21,17 @@ class RoutineCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
           image: AssetImage(image),
-          fit: BoxFit.cover, // الصورة تملأ الكارد بالكامل
+          fit: BoxFit.cover,
         ),
       ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: gradient.withOpacity(0.4),
+          gradient: LinearGradient(
+            colors: gradient.colors
+                .map((c) => c.withOpacity(0.4))
+                .toList(),
+          ),
         ),
         child: Align(
           alignment: Alignment.bottomCenter,

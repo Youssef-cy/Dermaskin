@@ -20,17 +20,17 @@ class RoutineStep {
 
 class MorningRoutineScreen extends StatefulWidget {
   @override
-  _MorningRoutineScreenState createState() => _MorningRoutineScreenState();
+  State<MorningRoutineScreen> createState() => _MorningRoutineScreenState();
 }
 
 class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
   final List<RoutineStep> steps = [
-    RoutineStep(id: '01', title: 'Cleanser', description: 'Gentle face wash to remove overnight oil & impurities', color: Color(0xFFFF74A4)),
-    RoutineStep(id: '02', title: 'Toner', description: 'Balance skin pH and prep for the next steps', color: Color(0xFF9191FF)),
-    RoutineStep(id: '03', title: 'Vitamin C Serum', description: 'Brighten and protect against free radicals', color: Color(0xFFFFD15B)),
-    RoutineStep(id: '04', title: 'Eye Cream', description: 'Hydrate and reduce puffiness around the eyes', color: Color(0xFF63FFD1)),
-    RoutineStep(id: '05', title: 'Moisturizer', description: 'Lock in hydration with a lightweight formula', color: Color(0xFFFF85A1)),
-    RoutineStep(id: '06', title: 'Sunscreen SPF 50+', description: 'NEVER skip this — protect from UV damage daily', color: Color(0xFFB19CFF)),
+    RoutineStep(id: '01', title: 'Cleanser', description: 'Gentle face wash', color: Color(0xFFFF74A4)),
+    RoutineStep(id: '02', title: 'Toner', description: 'Prep skin', color: Color(0xFF9191FF)),
+    RoutineStep(id: '03', title: 'Vitamin C Serum', description: 'Brighten', color: Color(0xFFFFD15B)),
+    RoutineStep(id: '04', title: 'Eye Cream', description: 'Hydrate eyes', color: Color(0xFF63FFD1)),
+    RoutineStep(id: '05', title: 'Moisturizer', description: 'Hydration', color: Color(0xFFFF85A1)),
+    RoutineStep(id: '06', title: 'Sunscreen', description: 'Protect', color: Color(0xFFB19CFF)),
   ];
 
   int get doneCount => steps.where((e) => e.isDone).length;
@@ -51,7 +51,7 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
       body: Stack(
         children: [
 
-          // SAME BACKGROUND
+          // BACKGROUND
           Positioned(top: -70, right: -70, child: _circle(Color(0xFFFFD6E8), 220)),
           Positioned(top: -30, right: -30, child: _circle(Color(0xFFE3BFFF), 110)),
           Positioned(bottom: -80, left: -80, child: _circle(Color(0xFFFFD6E8), 240)),
@@ -61,7 +61,7 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
             child: Column(
               children: [
 
-                // BACK BUTTON (same)
+                // BACK BUTTON
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Align(
@@ -80,7 +80,7 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
                   ),
                 ),
 
-                // HEADER (same)
+                // HEADER
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   padding: EdgeInsets.all(18),
@@ -96,21 +96,21 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
                           color: Color(0xFFFF74A4),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.wb_sunny_outlined, color: Colors.white, size: 28),
+                        child: Icon(Icons.wb_sunny_outlined, color: Colors.white),
                       ),
                       SizedBox(width: 15),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Morning Routine', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                          Text('Step-by-step for glowing skin', style: TextStyle(color: Colors.grey[700], fontSize: 13)),
+                          Text('Step-by-step for glowing skin'),
                         ],
                       )
                     ],
                   ),
                 ),
 
-                // LIST (same design)
+                // LIST
                 Expanded(
                   child: ListView.builder(
                     padding: EdgeInsets.all(20),
@@ -137,19 +137,16 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
                               ),
                               child: Text(step.id,
                                   style: TextStyle(
-                                    color: step.color,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                                      color: step.color,
+                                      fontWeight: FontWeight.bold)),
                             ),
                             SizedBox(width: 15),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(step.title,
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                  Text(step.description,
-                                      style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                                  Text(step.title, style: TextStyle(fontWeight: FontWeight.bold)),
+                                  Text(step.description, style: TextStyle(fontSize: 12)),
                                 ],
                               ),
                             ),
@@ -157,9 +154,7 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
                               value: step.isDone,
                               activeColor: step.color,
                               onChanged: (val) {
-                                setState(() {
-                                  step.isDone = val!;
-                                });
+                                setState(() => step.isDone = val!);
                                 updateScore();
                               },
                             )
@@ -170,7 +165,7 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
                   ),
                 ),
 
-                // BUTTON (same)
+                // BUTTON
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: ElevatedButton(
@@ -204,7 +199,10 @@ class _MorningRoutineScreenState extends State<MorningRoutineScreen> {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: color.withOpacity(0.7)),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color.withOpacity(0.7),
+      ),
     );
   }
 }

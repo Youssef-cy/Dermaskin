@@ -10,7 +10,8 @@ class UserData extends ChangeNotifier {
   String _gender = "";
   bool _active = false;
 
-  int _score = 0;
+  double _morningScore = 0.0;
+  double _nightScore = 0.0;
 
   // Getters
   String get name => _name;
@@ -20,7 +21,11 @@ class UserData extends ChangeNotifier {
   String get gender => _gender;
   Set<String> get skinConcerns => _skinConcerns;
   bool get active => _active;
-  int get score => _score;
+
+  double get morningScore => _morningScore;
+  double get nightScore => _nightScore;
+
+  int get score => ((_morningScore + _nightScore) / 2 * 100).round();
 
   void setPersonalInfo(String name, String email, String password) {
     _name = name;
@@ -45,23 +50,28 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ✅ SCORE CALCULATION (Morning + Night)
+  // ✅ UPDATED
   void calculateRoutineScore({
     required int morningTotal,
     required int morningDone,
     required int nightTotal,
     required int nightDone,
   }) {
-    int total = morningTotal + nightTotal;
-    int done = morningDone + nightDone;
+    if (morningTotal > 0) {
+      _morningScore = morningDone / morningTotal;
+    }
 
-    _score = total == 0 ? 0 : ((done / total) * 100).round();
+    if (nightTotal > 0) {
+      _nightScore = nightDone / nightTotal;
+    }
 
     notifyListeners();
   }
 
   void logout() {
     _active = false;
+    _morningScore = 0;
+    _nightScore = 0;
     notifyListeners();
   }
 }

@@ -20,18 +20,19 @@ class RoutineStep {
 
 class NightRoutineScreen extends StatefulWidget {
   @override
-  _NightRoutineScreenState createState() => _NightRoutineScreenState();
+  State<NightRoutineScreen> createState() => _NightRoutineScreenState();
 }
 
 class _NightRoutineScreenState extends State<NightRoutineScreen> {
+
   final List<RoutineStep> steps = [
-    RoutineStep(id: '01', title: 'Makeup Remover / Micellar Water', description: 'Break down makeup', color: Color(0xFFFF74A4)),
-    RoutineStep(id: '02', title: 'Oil Cleanser', description: 'Double cleanse', color: Color(0xFF9191FF)),
-    RoutineStep(id: '03', title: 'Gentle Cleanser', description: 'Deep cleanse pores', color: Color(0xFFFF74A4)),
+    RoutineStep(id: '01', title: 'Makeup Remover', description: 'Remove makeup & dirt', color: Color(0xFFFF74A4)),
+    RoutineStep(id: '02', title: 'Oil Cleanser', description: 'Break down oils', color: Color(0xFF9191FF)),
+    RoutineStep(id: '03', title: 'Gentle Cleanser', description: 'Deep clean pores', color: Color(0xFFFF74A4)),
     RoutineStep(id: '04', title: 'Toner / Essence', description: 'Hydration prep', color: Color(0xFF63FFD1)),
-    RoutineStep(id: '05', title: 'Treatment / Retinol', description: 'Skin repair', color: Color(0xFF9191FF)),
-    RoutineStep(id: '06', title: 'Eye Cream', description: 'Eye care', color: Color(0xFFB19CFF)),
-    RoutineStep(id: '07', title: 'Night Moisturizer', description: 'Overnight hydration', color: Color(0xFFFF85A1)),
+    RoutineStep(id: '05', title: 'Treatment / Retinol', description: 'Repair skin overnight', color: Color(0xFF9191FF)),
+    RoutineStep(id: '06', title: 'Eye Cream', description: 'Care for under eyes', color: Color(0xFFB19CFF)),
+    RoutineStep(id: '07', title: 'Night Moisturizer', description: 'Lock hydration', color: Color(0xFFFF85A1)),
   ];
 
   int get doneCount => steps.where((e) => e.isDone).length;
@@ -52,6 +53,7 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
       body: Stack(
         children: [
 
+          // BACKGROUND
           Positioned(top: -70, right: -70, child: _circle(Color(0xFFD8D0FF), 220)),
           Positioned(top: -30, right: -30, child: _circle(Color(0xFFBFAFFF), 110)),
           Positioned(bottom: -80, left: -80, child: _circle(Color(0xFFD8D0FF), 240)),
@@ -60,6 +62,8 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
           SafeArea(
             child: Column(
               children: [
+
+                // BACK BUTTON
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Align(
@@ -68,16 +72,17 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
-                        boxShadow: [BoxShadow(color: Colors.deepPurple, blurRadius: 10)],
+                        boxShadow: [BoxShadow(color: Colors.deepPurple.shade100, blurRadius: 10)],
                       ),
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios_new, color:Colors.black, size: 18),
+                        icon: Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 18),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
                   ),
                 ),
 
+                // HEADER
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   padding: EdgeInsets.all(18),
@@ -99,7 +104,10 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Night Routine", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                          Text(
+                            "Night Routine",
+                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
                           Text("Repair and restore while you sleep"),
                         ],
                       )
@@ -107,6 +115,7 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
                   ),
                 ),
 
+                // LIST
                 Expanded(
                   child: ListView.builder(
                     padding: EdgeInsets.all(20),
@@ -131,12 +140,29 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
                                 color: step.color.withOpacity(0.2),
                                 shape: BoxShape.circle,
                               ),
-                              child: Text(step.id),
+                              child: Text(
+                                step.id,
+                                style: TextStyle(
+                                  color: step.color,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             SizedBox(width: 15),
-                            Expanded(child: Text(step.title)),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(step.title,
+                                      style: TextStyle(fontWeight: FontWeight.bold)),
+                                  Text(step.description,
+                                      style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                ],
+                              ),
+                            ),
                             Checkbox(
                               value: step.isDone,
+                              activeColor: step.color,
                               onChanged: (val) {
                                 setState(() {
                                   step.isDone = val!;
@@ -151,8 +177,9 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
                   ),
                 ),
 
+                // BUTTON
                 Padding(
-                  padding: EdgeInsets.only(bottom: 30),
+                  padding: const EdgeInsets.only(bottom: 30),
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
@@ -162,6 +189,13 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
                       });
                       updateScore();
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF7B68EE),
+                      minimumSize: Size(250, 52),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(26),
+                      ),
+                    ),
                     child: Text("Mark All Done ✓"),
                   ),
                 ),
@@ -177,7 +211,10 @@ class _NightRoutineScreenState extends State<NightRoutineScreen> {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: color.withOpacity(0.7)),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color.withOpacity(0.7),
+      ),
     );
   }
 }

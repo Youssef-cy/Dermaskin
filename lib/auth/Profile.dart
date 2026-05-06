@@ -1,4 +1,5 @@
 import 'package:dramaskin/Provider/userdata.dart';
+import 'package:dramaskin/Questions/firstQuestion.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,7 @@ class ProfilePage extends StatelessWidget {
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/profile (1).png'),
+            image: AssetImage('assets/profilebg.jpeg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -71,7 +72,7 @@ class ProfilePage extends StatelessWidget {
                             backgroundColor: Color(0xFFF775A9).withOpacity(0.3),
                             child: CircleAvatar(
                               radius: 65,
-                              backgroundImage: AssetImage('assets/Fluttershy.jpeg'),
+                                // backgroundImage: AssetImage('assets/Fluttershy.jpeg'),
                             ),
                           ),
                           CircleAvatar(
@@ -155,10 +156,47 @@ class ProfilePage extends StatelessWidget {
                             Text('${Provider.of<UserData>(context).skinConcerns}',
                                 style: TextStyle(fontSize: 15)),
                             SizedBox(height: 50),
-                            Image.asset(
-                              'assets/button.png',
+                            SizedBox(
                               width: double.infinity,
-                              fit: BoxFit.contain,
+                              height: 52,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color:   Color(0xfff66a9c),
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFFE060A0).withOpacity(0.4),
+                                      blurRadius: 16,
+                                      offset: const Offset(0, 6),
+                                    ),
+                                  ],
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => QuestionnaireScreen()),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Edit Profile',
+                                    style: TextStyle(
+                                      fontFamily: 'Georgia',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      letterSpacing: 0.4,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),

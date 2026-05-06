@@ -1,3 +1,4 @@
+import 'package:dramaskin/Provider/products.dart';
 import 'package:dramaskin/Provider/userdata.dart';
 import 'package:dramaskin/splash.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,11 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserData(),
-    child: MyApp(),   
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context)=>UserData()),
+      ChangeNotifierProvider(create: (context)=>products()),
+    ],
+    child: MyApp(),
     )
   );
 }
@@ -16,6 +19,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: SplashScreen(),);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false ,
+      home: SplashScreen(),);
   }
 }

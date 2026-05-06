@@ -85,7 +85,7 @@ class _SignupState extends State<Signup> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: const BorderSide(
-                            color: Colors.pinkAccent, // 👈 غير اللون اللي انت عايزه
+                            color: Colors.pinkAccent,
                             width: 2,
                           ),
                         ),
@@ -211,8 +211,6 @@ class _SignupState extends State<Signup> {
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
 
-                          print("Email: ${emailController.text}");
-                          print("Password: ${passwordController.text}");
 
                           Provider.of<UserData>(context,listen: false).setPersonalInfo(UsernameController.text,emailController.text,passwordController.text);
 

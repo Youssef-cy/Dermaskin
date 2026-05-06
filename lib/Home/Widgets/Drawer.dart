@@ -1,6 +1,9 @@
 import 'package:dramaskin/Provider/userdata.dart';
+import 'package:dramaskin/Questions/firstQuestion.dart';
 import 'package:dramaskin/auth/Login.dart';
 import 'package:dramaskin/auth/Profile.dart';
+import 'package:dramaskin/auth/settings.dart';
+import 'package:dramaskin/shop/mainshop.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,9 +31,15 @@ class AppDrawer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>ProfilePage()));
-                    },
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(),
+                          ),
+                        );
+                      },
                       child: Container(
                         width: 72,
                         height: 72,
@@ -127,11 +136,19 @@ class AppDrawer extends StatelessWidget {
                   isActive: true,
                   onTap: () => Navigator.pop(context),
                 ),
-                _DrawerItem(emoji: '✨', label: 'My Routine', onTap: () {}),
-                _DrawerItem(emoji: '🛍️', label: 'Shop', onTap: () {}),
-                _DrawerItem(emoji: '💉', label: 'Skin Quiz', onTap: () {}),
-                _DrawerItem(emoji: '👤', label: 'Profile', onTap: () {}),
-                _DrawerItem(emoji: '⚙️', label: 'Settings', onTap: () {}),
+                _DrawerItem(emoji: '🛍️', label: 'Shop', onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>mainShop()));}),
+                _DrawerItem(emoji: '💉', label: 'Skin Quiz', onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>QuestionnaireScreen()));}),
+                _DrawerItem(emoji: '👤', label: 'Profile', onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) =>ProfilePage()));}),
+                _DrawerItem(
+                  emoji: '⚙️',
+                  label: 'Settings',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingsScreen()),
+                    );
+                  },
+                ),
               ],
             ),
           ),
