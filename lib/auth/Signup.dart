@@ -227,7 +227,7 @@ class _SignupState extends State<Signup> {
                         ),
                         child: const Center(
                           child: Text(
-                            "Continue Steps To Setup",
+                            "signup",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,

@@ -211,7 +211,9 @@ class _ReviewOrderScreenState extends State<ReviewOrderScreen> {
 
                           SizedBox(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
@@ -234,7 +236,10 @@ class _ReviewOrderScreenState extends State<ReviewOrderScreen> {
 
                           SizedBox(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+
+                                showOrderPlacedDialog(context);
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
@@ -477,4 +482,95 @@ class InfoCard extends StatelessWidget {
       ),
     );
   }
+}
+
+
+void showOrderPlacedDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        // Custom shape for the dialog itself
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: Material(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(32),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Wrap content height
+              children: [
+                // --- Success Checkmark ---
+                SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFFB2FBE0), // Light mint border
+                        width: 4,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.check,
+                      size: 40,
+                      color: Color(0xFFB2FBE0),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // --- Title ---
+                const Text(
+                  'Order placed! 🎉',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF2C3248),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // --- Order ID Badge ---
+                Material(
+                  color: const Color(0xFFFFF0F5), // Light pink background
+                  borderRadius: BorderRadius.circular(20),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                      'Order #DRM-20482',
+                      style: TextStyle(
+                        color: Color(0xFFF06292),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // --- Description Text ---
+                const Text(
+                  'Your skincare is on its way! You\'ll get a\nconfirmation email shortly with tracking details.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 15,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }

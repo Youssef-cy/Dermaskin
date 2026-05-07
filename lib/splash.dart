@@ -1,5 +1,6 @@
 import 'package:dramaskin/Home/Home.dart';
 import 'package:dramaskin/auth/Login.dart';
+import 'package:dramaskin/shop/mainshop.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -343,7 +344,7 @@ class _ButtonSection extends StatelessWidget {
             height: 52,
             child: OutlinedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>mainShop()));
               },
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Color(0xFFE060A0), width: 1.8),
